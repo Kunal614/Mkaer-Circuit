@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+body {
+    background-image: linear-gradient(to right, red, blue, orange);
+    font-family: 'Raleway', sans-serif;
+}
+
+.container {
+  width: 100%;
+  padding-top: 0%;
+  margin: auto;
+  background-color: white;
+}
+
+svg {
+  position: relative;
+  margin: auto;
+  padding-bottom: 2rem;
+}
+
+.draggable {
+  cursor: move;
+}
+
+#workspace-img {
+  opacity: 0.8;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #root, #root * {
+    visibility: visible;
+  }
+  #workspace-img {
+    visibility: hidden;
+  }
+  #root {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}

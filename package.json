@@ -1,0 +1,20 @@
+{
+  "name": "circuito-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "save-svg-as-png": "^1.4.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}

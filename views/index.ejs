@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+<link rel="stylesheet" href="/css/style.css" rel="text/css">
+<title>Banaao Makerspace</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+        <a class="navbar-brand" href="#">Banaao Makerspace</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <button id="led-btn" class="btn btn-outline-danger mr-2">LED</button>
+            <button id="battery-btn" class="btn btn-outline-primary mr-2">Battery</button>
+            <button id="create-ckt" class="btn btn-outline-success mr-2">Create Circuit</button>
+            <button id="reset-ckt" class="btn btn-outline-warning mr-2">Reset Circuit</button>
+            <button id="download-btn" onclick="download()" class="btn btn-outline-secondary mr-2">Print Circuit</button>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control-file mr-sm-2 btn btn-outline-primary" type="file" aria-label="Upload" name="paperCkt" id="paper-ckt">
+            </form>
+        </div>
+    </nav>
+    <div id="workspace" class="container">
+        <div class="jumbotron text-uppercase mt-5" id="workspace-header">
+            <h1>Welcome To Banaao Paper Circuit Workspace</h1>
+        </div>
+        <svg id="root" class="maxFullHeightWidth margin-auto" xmlns="http://www.w3.org/2000/svg" version="1.2" transform="translate(0,0) scale(1)" viewBox="0 0 100 100" onload="makeDraggable(evt)">
+            <defs>
+                <filter id="shadow">
+                    <feDropShadow dx="0.2" dy="0.4" stdDeviation="0.2" flood-color="red" />
+                </filter>
+            </defs>
+            <image id="workspace-img"></image>
+            <g id="main-group" class="maxFullHeightWidth margin-auto" transform="translate(0,0) scale(1)" opacity="1"></g>
+        </svg>
+    </div>
+    <script id="led-template" type="text/html">
+        <g class="component LEDRed LEDRed_5v" data-comp-name="LEDRed" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image LEDRed_5v draggable" preserveAspectRatio="none" href="https://res.cloudinary.com/circuito/image/upload/d1io7wteigukr8v1b9s7"></image>
+        </g>
+    </script>
+    <script id="battery-template" type="text/html">
+        <g class="component 9VBattery" data-comp-name="9VAlk" transform="translate(0, 0) rotate(0) scale(0.09)">
+            <image class="component-image 9VBattery draggable" preserveAspectRatio="none" href="https://res.cloudinary.com/circuito/image/upload/gg2tihvttc7ustmbdmqh" filter=""></image>
+        </g>
+    </script>
+    <script id="led-wire-template" type="text/html">
+        <line x1={{x1}} y1={{y1}} x2={{x2}} y2={{y2}} transform="scale(0.09)" style="stroke:rgb(0,0,255);stroke-width:4;z-index: -1;" />
+    </script>
+    <script id="battery-wire-template" type="text/html">
+        <line x1={{x1}} y1={{y1}} x2={{x2}} y2={{y2}} transform="scale(0.09)" style="stroke:rgb(0,0,0);stroke-width:4;z-index: -1;" />
+    </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="/js/saveSvgAsPDF.js"></script>
+<script src="/js/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
