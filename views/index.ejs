@@ -1,69 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-<link rel="stylesheet" href="/css/style.css" rel="text/css">
-<title>Banaao Makerspace</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css" rel="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css">
+    <title>PaperTronics Makerspace Makerspace</title>
+
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-        <a class="navbar-brand" href="#">Banaao Makerspace</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#">PaperTronics Makerspace Makerspace</a>
 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <button id="led-btn" class="btn btn-outline-danger mr-2">LED</button>
-            <button id="battery-btn" class="btn btn-outline-primary mr-2">Battery</button>
-            <button id="create-ckt" class="btn btn-outline-success mr-2">Create Circuit</button>
-            <button id="reset-ckt" class="btn btn-outline-warning mr-2">Reset Circuit</button>
-            <button id="download-btn" onclick="download()" class="btn btn-outline-secondary mr-2">Print Circuit</button>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control-file mr-sm-2 btn btn-outline-primary" type="file" aria-label="Upload" name="paperCkt" id="paper-ckt">
-            </form>
+            <button onclick="forward()" class="btn btn-outline-primary mr-2">Profile</button>
+        <button id="create-ckt" class="btn btn-outline-success mr-2">Create Circuit</button>
+        <button id="reset-wire-ckt" class="btn btn-outline-warning mr-2">Reset Connections</button>
+        <button id="reset-ckt" class="btn btn-outline-warning mr-2">Reset Circuit</button>
+        <button id="download-btn" onclick="download()" class="btn btn-outline-secondary mr-2">Print Circuit</button>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control-file mr-sm-2 btn btn-outline-primary" type="file" aria-label="Upload" name="paperCkt" id="paper-ckt">
+        </form>
+        <form id="logout-btn" action="/sessionLogout" method="GET">
+            <input type="submit" value="Logout" class="btn btn-outline-danger mr-2">
+        </form>
         </div>
     </nav>
     <div id="workspace" class="container">
         <div class="jumbotron text-uppercase mt-5" id="workspace-header">
             <h1>Welcome To Banaao Paper Circuit Workspace</h1>
         </div>
+
+        <div id="elements-container" style="padding-bottom: 10px;">
+            <div id="elem-buttons">
+                <button id="led-btn" class="btn btn-outline-primary mr-2">LED</button>
+                <button id="battery-btn" class="btn btn-outline-primary mr-2">Battery</button>
+                <button id="resistor-btn" class="btn btn-outline-primary mr-2">Resistor</button>
+                <button id="switch-btn" class="btn btn-outline-primary mr-2">Sensors</button>
+                <button id="buzzer-btn" class="btn btn-outline-primary mr-2">Buzzer</button>
+            </div>
+            <div id="led-container">
+                <div style="padding-left: 10px; display: inline-block;">Leds: </div>
+                <button id="led01" class="ledsClose btn btn-light"><img src="/images/greenLED_closeLegs.png"></button>
+                <button id="led02" class="ledsClose btn btn-light"><img src="/images/redLED_closeLegs.png"></button>
+                <button id="led03" class="ledsClose btn btn-light"><img src="/images/blueLED_closeLegs.png"></button>
+                <button id="led04" class="ledsClose btn btn-light"><img src="/images/yellowLED_closeLegs.png"></button>
+                <button id="led05" class="ledsOpen btn btn-light"><img src="/images/greenLED_openLegs.png"></button>
+                <button id="led06" class="ledsOpen btn btn-light"><img src="/images/redLED_openLegs.png"></button>
+                <button id="led07" class="ledsOpen btn btn-light"><img src="/images/blueLED_openLegs.png"></button>
+                <button id="led08" class="ledsOpen btn btn-light"><img src="/images/yellowLED_openLegs.png"></button>
+            </div>
+            <div id="battery-container">
+                <div style="padding-left: 10px; display: inline-block;">Batterys: </div>
+                <button id="battery01" class="batterys btn btn-light"><img src="/images/battery.png"></button>
+                <button id="battery02" class="batterys btn btn-light"><img src="/images/battery2.png"></button>
+            </div>
+            <div id="resistor-container">
+                <div style="padding-left: 10px; display: inline-block;">Resistors: </div>
+                <button id="comp01" class="resistors resistorHeight btn btn-light"><img src="/images/r1.png"></button>
+                <button id="comp09" class="resistors resistorWidth btn btn-light"><img src="/images/r25.png"></button>
+            </div>
+            <div id="sensor-container">
+                <div style="padding-left: 10px; display: inline-block;">Sensors:</div>
+                <button id="magnetic-btn" class="btn btn-outline-primary mr-2">Magnetic Sensor</button>
+                <button id="light-btn" class="btn btn-outline-primary mr-2">Light Sensor</button>
+                <button id="diode-btn" class="btn btn-outline-primary mr-2">Diode</button>
+                <button id="tilt-btn" class="btn btn-outline-primary mr-2">Tilt Switches</button>
+                <div id="magnetic-container" style="margin-top: 10px;">
+                    <div style="padding: 0px 10px 0px 80px; display: inline-block;">Magnetic Sensor: </div>
+                    <button id="comp04" class="sensor switchHeight btn btn-light"><img src="/images/r9.png"></button>
+                </div>
+                <div id="light-container">
+                    <div style="padding: 0px 42px 0px 80px; display: inline-block;">Light Sensor: </div>
+                    <button id="comp10" class="sensor switchWidth btn btn-light"><img src="/images/r23.png"></button>
+                </div>
+                <div id="diode-container">
+                    <div style="padding: 0px 83px 0px 80px; display: inline-block;">Diodes: </div>
+                    <button id="comp07" class="sensor switchHeight btn btn-light"><img src="/images/r21.png"></button>
+                    <button id="comp08" class="sensor switchWidth btn btn-light"><img src="/images/r22.png"></button>
+                </div>
+                <div id="tilt-container">
+                    <div style="padding: 0px 40px 0px 80px; display: inline-block;">Tilt Switches: </div>
+                    <button id="comp05" class="sensor switchWidthHeight btn btn-light"><img src="/images/r10.png"></button>
+                    <button id="comp06" class="sensor switchWidth btn btn-light"><img src="/images/r11.png"></button>
+                </div>
+            </div>
+            <div id="buzzer-container">
+                <div style="padding-left: 10px; display: inline-block;">Buzzer: </div>
+                <button id="comp11" class="buzzer btn btn-light"><img src="/images/r12.png"></button>
+            </div>
+        </div>
+
         <svg id="root" class="maxFullHeightWidth margin-auto" xmlns="http://www.w3.org/2000/svg" version="1.2" transform="translate(0,0) scale(1)" viewBox="0 0 100 100" onload="makeDraggable(evt)">
-            <defs>
-                <filter id="shadow">
-                    <feDropShadow dx="0.2" dy="0.4" stdDeviation="0.2" flood-color="red" />
-                </filter>
-            </defs>
-            <image id="workspace-img"></image>
-            <g id="main-group" class="maxFullHeightWidth margin-auto" transform="translate(0,0) scale(1)" opacity="1"></g>
+            <image id="workspace-img" src=""></image>
+            <g id="main-group" class="maxFullHeightWidth margin-auto" transform="translate(0,0) scale(1)" opacity="1">
+            </g>
         </svg>
     </div>
-    <script id="led-template" type="text/html">
-        <g class="component LEDRed LEDRed_5v" data-comp-name="LEDRed" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
-            <image class="component-image LEDRed_5v draggable" preserveAspectRatio="none" href="https://res.cloudinary.com/circuito/image/upload/d1io7wteigukr8v1b9s7"></image>
+
+
+
+    <script id="r1" type="text/html">
+        <g class="component bResistors" data-comp-name="resistors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r1.png"></image>
+        </g>
+    </script>
+    <script id="r2" type="text/html">
+        <g class="component sReedSwitch" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r2.png"></image>
+        </g>
+    </script>
+    <script id="r3" type="text/html">
+        <g class="component sensors" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image 3colResistor draggable" preserveAspectRatio="none" href="/images/r3.png"></image>
+        </g>
+    </script>
+    <script id="r9" type="text/html">
+        <g class="component magneticSensor" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r9.png"></image>
+        </g>
+    </script>
+    <script id="r10" type="text/html">
+        <g class="component tilt01" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r10.png"></image>
+        </g>
+    </script>
+    <script id="r11" type="text/html">
+        <g class="component tilt02" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r11.png"></image>
+        </g>
+    </script>
+    <script id="r12" type="text/html">
+        <g class="component buzzer" data-comp-name="resistors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r12.png"></image>
+        </g>
+    </script>
+    <script id="r21" type="text/html">
+        <g class="component bDiode" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image 3colResistor draggable" preserveAspectRatio="none" href="/images/r21.png"></image>
+        </g>
+    </script>
+    <script id="r22" type="text/html">
+        <g class="component sDiode" data-comp-name="sensors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image 3colResistor draggable" preserveAspectRatio="none" href="/images/r22.png"></image>
+        </g>
+    </script>
+    <script id="r23" type="text/html">
+        <g class="component lightSensor" data-comp-name="resistors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r23.png"></image>
+        </g>
+    </script>
+    <script id="r25" type="text/html">
+        <g class="component sResistors" data-comp-name="resistors" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/r25.png"></image>
+        </g>
+    </script>
+
+
+    <script id="redLED01" type="text/html">
+        <g class="component closeLegsLED" data-comp-name="LEDRed" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/redLED_closeLegs.png"></image>
+        </g>
+    </script>
+    <script id="greenLED01" type="text/html">
+        <g class="component closeLegsLED" data-comp-name="LEDGreen" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/greenLED_closeLegs.png"></image>
+        </g>
+    </script>
+    <script id="blueLED01" type="text/html">
+        <g class="component closeLegsLED" data-comp-name="LEDBlue" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/blueLED_closeLegs.png"></image>
+        </g>
+    </script>
+    <script id="yellowLED01" type="text/html">
+        <g class="component closeLegsLED" data-comp-name="LEDYellow" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/yellowLED_closeLegs.png"></image>
+        </g>
+    </script>
+    <script id="redLED02" type="text/html">
+        <g class="component openLegsLED" data-comp-name="LEDRed" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-imag draggable" preserveAspectRatio="none" href="/images/redLED_openLegs.png"></image>
+        </g>
+    </script>
+    <script id="greenLED02" type="text/html">
+        <g class="component openLegsLED" data-comp-name="LEDGreen" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-imag draggable" preserveAspectRatio="none" href="/images/greenLED_openLegs.png"></image>
+        </g>
+    </script>
+    <script id="blueLED02" type="text/html">
+        <g class="component openLegsLED" data-comp-name="LEDBlue" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-imag draggable" preserveAspectRatio="none" href="/images/blueLED_openLegs.png"></image>
+        </g>
+    </script>
+    <script id="yellowLED02" type="text/html">
+        <g class="component openLegsLED" data-comp-name="LEDYellow" transform="translate(0, 0) rotate(0) scale(0.09)" style="z-index:1;">
+            <image class="component-imag draggable" preserveAspectRatio="none" href="/images/yellowLED_openLegs.png"></image>
         </g>
     </script>
     <script id="battery-template" type="text/html">
         <g class="component 9VBattery" data-comp-name="9VAlk" transform="translate(0, 0) rotate(0) scale(0.09)">
-            <image class="component-image 9VBattery draggable" preserveAspectRatio="none" href="https://res.cloudinary.com/circuito/image/upload/gg2tihvttc7ustmbdmqh" filter=""></image>
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/battery.png" filter=""></image>
         </g>
     </script>
-    <script id="led-wire-template" type="text/html">
-        <line x1={{x1}} y1={{y1}} x2={{x2}} y2={{y2}} transform="scale(0.09)" style="stroke:rgb(0,0,255);stroke-width:4;z-index: -1;" />
-    </script>
-    <script id="battery-wire-template" type="text/html">
-        <line x1={{x1}} y1={{y1}} x2={{x2}} y2={{y2}} transform="scale(0.09)" style="stroke:rgb(0,0,0);stroke-width:4;z-index: -1;" />
+    <script id="battery-template02" type="text/html">
+        <g class="component 5VBattery" data-comp-name="5VAlk" transform="translate(0, 0) rotate(0) scale(0.09)">
+            <image class="component-image draggable" preserveAspectRatio="none" href="/images/battery2.png" filter=""></image>
+        </g>
     </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-<script src="/js/saveSvgAsPDF.js"></script>
-<script src="/js/index.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
+
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/svg.min.js"></script>
+    <script type="text/javascript" src="/js/svg.intersections.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="/js/saveSvgAsPDF.js"></script>
+    <script src="/js/index.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-database.js"></script>
+    <script>
+        data = document.URL;
+        p = data.split('/');
+        var k = p[4];
+
+        function forward() {
+            window.location.assign("/profile/" + k);
+        }
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Change Password
+    </title>
+    <style>
+        input[type="email"] {
+            width: 30%;
+            padding: 20px;
+            background: #181c22;
+            border: 0;
+            font-size: 15px;
+            color: #989898;
+        }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body style=" background-image: url('/static/PaperTronics_wo_box.png');
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: 'Numans', sans-serif;">
+
+    <div style="text-align: center; margin-top: 20%;">
+        <h1 style="font-family: serif;">Email For Password Reset Link</h1>
+        <input type="email" name="email" id="email" required/>
+        <button onclick="forward()" class="btn btn-success">Submit</button>
+    </div>
+    <script>
+        function forward() {
+            console.log("xs");
+            var email = document.getElementById('email').value;
+            console.log(email);
+            window.location.assign('/Send/' + email);
+        }
+    </script>
+</body>
+
+</html>

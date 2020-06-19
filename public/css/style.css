@@ -11,8 +11,17 @@ body {
   margin: auto;
   background-color: white;
 }
+/* #led-pic{
+  display: none;
+  width: 2%;
+} */
 
-svg {
+/* #battery-pic{
+  display: none;
+  width: 10%;
+} */
+
+#root {
   position: relative;
   margin: auto;
   padding-bottom: 2rem;
@@ -26,6 +35,131 @@ svg {
   opacity: 0.8;
 }
 
+#elements-container {
+  width: 100%;;
+  background-color: floralwhite;
+}
+/* #elem-buttons button {
+  margin: 0px 2px;
+} */
+#led-container {
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+#battery-container {
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+#resistor-container {
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+#sensor-container {
+  border: solid 1px black;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 7px 0px;
+}
+#buzzer-container {
+  border: solid 1px rgb(0, 0, 0);
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.ledsOpen, .ledsClose {
+  width: 40px;
+  height: 40px;
+  margin: 5px 2px;
+  padding: 1px;
+  display: inline-block;
+  border: solid 1px grey;
+}
+.ledsClose img {
+  width: 20px;
+  height: 35px;
+}
+.ledsOpen img {
+  width: 35px;
+  height: 30px;
+}
+
+.batterys {
+  width: 40px;
+  height: 40px;
+  margin: 5px 2px;
+  padding: 1px;
+  display: inline-block;
+  border: solid 1px grey;
+}
+
+.batterys img {
+  width: 25px;
+  height: 36px;
+}
+
+.resistorWidth, .resistorHeight {
+  width: 40px;
+  height: 40px;
+  margin: 5px 2px;
+  padding: 1px;
+  display: inline-block;
+  border: solid 1px grey;
+}
+.resistorWidth img {
+  width: 35px;
+  height: 10px;
+}
+.resistorHeight img {
+  width: 35px;
+  height: 20px;
+}
+
+.switchWidth, .switchHeight {
+  width: 40px;
+  height: 40px;
+  margin: 5px 2px;
+  padding: 1px;
+  display: inline-block;
+  border: solid 1px grey;
+}
+.switchWidthHeight {
+  width: 40px;
+  height: 40px;
+  margin: 5px 2px;
+  padding: 1px;
+  display: inline-block;
+  border: solid 1px grey;
+}
+
+.switchHeight img {
+  width: 35px;
+  height: 25px;
+}
+.switchWidth img {
+  width: 35px;
+  height: 10px;
+}
+.switchWidthHeight img{
+  width: 32px;
+  height: 32px;
+}
+
+.buzzer {
+  width: 40px;
+  height: 40px;
+  margin: 5px 2px;
+  padding: 1px;
+  display: inline-block;
+  border: solid 1px grey;
+}
+.buzzer img {
+  width: 30px;
+  height: 35px;
+}
+
 @media print {
   body * {
     visibility: hidden;
@@ -34,7 +168,7 @@ svg {
     visibility: visible;
   }
   #workspace-img {
-    visibility: hidden;
+    visibility: visible;
   }
   #root {
     position: absolute;
