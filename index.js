@@ -18,18 +18,18 @@ const serviceAccount = require("./serviceAccountKey.json");
 
 
 var firebaseConfig = {
-    apiKey: "AIzaSyCul5ata2gTPWclE0fmXzgHawN7hMZWjOA",
-    authDomain: "circuitmaker-89730.firebaseapp.com",
-    databaseURL: "https://circuitmaker-89730.firebaseio.com",
-    projectId: "circuitmaker-89730",
-    storageBucket: "circuitmaker-89730.appspot.com",
-    messagingSenderId: "123357909691",
-    appId: "1:123357909691:web:bef9d6dae780340c540f9e",
-    measurementId: "G-RG2GV4C6L3"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
 };
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://circuitmaker-89730.firebaseio.com"
+    databaseURL: ""
 });
 
 // Initialize Firebase
